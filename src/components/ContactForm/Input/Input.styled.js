@@ -9,15 +9,7 @@ export const LabelStyled = styled.label`
   cursor: pointer;
 `;
 
-export const InputStyled = styled.input.attrs(
-  ({ type, name, pattern, title, }) => ({
-    type,
-    name,
-    pattern,
-    title,
-    required: true,
-  })
-)`
+export const InputStyled = styled.input`
   width: 95%;
   padding: 7px 15px;
   border-radius: 4px;

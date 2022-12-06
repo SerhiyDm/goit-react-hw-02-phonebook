@@ -24,13 +24,12 @@ export class App extends Component {
         contactsItem => contactsItem.name === contact.name
       )
     ) {
-      contact.id = nanoid();
       this.setState(prevState => ({
-        contacts: [...prevState.contacts, contact],
+        contacts: [...prevState.contacts, { ...contact, id: nanoid() }],
       }));
       return true;
     }
-    alert(`${this.state.name} is already in contacts`);
+    alert(`${contact.name} is already in contacts`);
   };
   getFilterInputValue = e => {
     this.setState({

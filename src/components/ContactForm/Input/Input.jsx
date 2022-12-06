@@ -8,15 +8,17 @@ export const Input = ({
   name,
   pattern,
   title,
+  value,
 }) => (
   <LabelStyled>
     {text}
     <InputStyled
-      onBlur={handleChange}
+      onChange={handleChange}
       type={type}
       name={name}
       pattern={pattern}
       title={title}
+      value={value}
     />
   </LabelStyled>
 );
