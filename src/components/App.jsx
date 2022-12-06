@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { GlobalStyles } from './GlobalStyles';
+import { nanoid } from 'nanoid';
 import { Contacts } from './ContactsList/ContactsList';
 import { ContactForm } from './ContactForm/ContactForm';
 import { Filter } from './Filter/Filter';
@@ -13,10 +14,24 @@ export class App extends Component {
     ],
     filter: '',
   };
-  setContactData = contact =>
-    this.setState(prs => ({
-      contacts: [...prs.contacts, contact],
-    }));
+  setContactData = contact => {
+    contact.name = contact.name
+      .split(' ')
+      .map(name => name[0].toUpperCase() + name.slice(1).toLowerCase())
+      .join(' ');
+    if (
+      !this.state.contacts.find(
+        contactsItem => contactsItem.name === contact.name
+      )
+    ) {
+      contact.id = nanoid();
+      this.setState(prevState => ({
+        contacts: [...prevState.contacts, contact],
+      }));
+      return true;
+    }
+    alert(`${this.state.name} is already in contacts`);
+  };
   getFilterInputValue = e => {
     this.setState({
       filter: e.currentTarget.value,
@@ -26,20 +41,16 @@ export class App extends Component {
   getDataForRenderList = () => {
     const { contacts, filter } = this.state;
     const normalizedFilter = filter.toLowerCase();
-    const dataByFilter = contacts.filter(e =>
-      e.name.toLowerCase().includes(normalizedFilter)
+    const dataByFilter = contacts.filter(contact =>
+      contact.name.toLowerCase().includes(normalizedFilter)
     );
 
     return filter ? dataByFilter : contacts;
   };
 
-  isInContacts = (name, value) => {
-    return this.state.contacts.find(e => e[name] === value);
-  };
-
   onDelete = itemId =>
-    this.setState(prst => ({
-      contacts: prst.contacts.filter(e => e.id !== itemId),
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== itemId),
     }));
 
   render() {
@@ -56,10 +67,7 @@ export class App extends Component {
         }}
       >
         <h1>Phonebook</h1>
-        <ContactForm
-          setContactData={this.setContactData}
-          isInContacts={this.isInContacts}
-        />
+        <ContactForm setContactData={this.setContactData} />
         <h2>Contacts</h2>
         <Filter
           handleChange={this.getFilterInputValue}

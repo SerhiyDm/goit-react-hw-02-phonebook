@@ -5,10 +5,25 @@ import { ContactsItem } from '../ContactsItem/ContactsItem';
 export const Contacts = ({ options, handleClick }) =>
   options.length !== 0 && (
     <List>
-      <ContactsItem options={options} handleClick={handleClick} />
+      {options.map(({ id, name, number }) => (
+        <ContactsItem
+          key={id}
+          name={name}
+          number={number}
+          id={id}
+          handleClick={handleClick}
+        />
+      ))}
     </List>
   );
 
 Contacts.propTypes = {
-  options: PropTypes.array.isRequired,
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired,
+    }).isRequired
+  ).isRequired,
+  handleClick: PropTypes.func.isRequired,
 };

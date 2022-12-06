@@ -10,8 +10,7 @@ export const LabelStyled = styled.label`
 `;
 
 export const InputStyled = styled.input.attrs(
-  ({ type, name, pattern, title, defaultValue }) => ({
-    defaultValue,
+  ({ type, name, pattern, title, }) => ({
     type,
     name,
     pattern,

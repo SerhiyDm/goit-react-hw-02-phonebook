@@ -6,7 +6,6 @@ export const Input = ({
   text = '',
   type,
   name,
-  value,
   pattern,
   title,
 }) => (
@@ -16,7 +15,6 @@ export const Input = ({
       onBlur={handleChange}
       type={type}
       name={name}
-      defaultValue={value}
       pattern={pattern}
       title={title}
     />
@@ -27,7 +25,6 @@ Input.propTypes = {
   handleChange: PropTypes.func.isRequired,
   type: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
   pattern: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
 };
